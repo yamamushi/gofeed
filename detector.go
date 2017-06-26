@@ -4,7 +4,7 @@ import (
 	"io"
 	"strings"
 
-	"github.com/mmcdole/gofeed/internal/shared"
+	"github.com/yamamushi/gofeed/internal/shared"
 	"github.com/mmcdole/goxpp"
 )
 
