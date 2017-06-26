@@ -8,8 +8,8 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/mmcdole/gofeed/atom"
-	"github.com/mmcdole/gofeed/rss"
+	"github.com/yamamushi/gofeed/atom"
+	"github.com/yamamushi/gofeed/rss"
 )
 
 // HTTPError represents an HTTP error returned by a server.
