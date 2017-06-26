@@ -97,6 +97,42 @@ func (f *Parser) ParseURL(feedURL string) (feed *Feed, err error) {
 	return f.Parse(resp.Body)
 }
 
+
+// The same as ParseURL, with a user-provided user-agent string
+func (f *Parser) ParseUserAgentURL(feedURL string, useragent string) (feed *Feed, err error) {
+	client := f.httpClient()
+
+	req, err := http.NewRequest("GET", feedURL, nil)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Set("User-Agent", useragent)
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+
+	if resp != nil {
+		defer func() {
+			ce := resp.Body.Close()
+			if ce != nil {
+				err = ce
+			}
+		}()
+	}
+
+	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
+		return nil, HTTPError{
+			StatusCode: resp.StatusCode,
+			Status:     resp.Status,
+		}
+	}
+
+	return f.Parse(resp.Body)
+}
+
+
 // ParseString parses a feed XML string and into the
 // universal feed type.
 func (f *Parser) ParseString(feed string) (*Feed, error) {
